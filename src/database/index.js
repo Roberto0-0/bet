@@ -1,8 +1,15 @@
 import { Sequelize } from 'sequelize'
+import "dotenv/config"
 
-export const sequelize = new Sequelize('bet', 'root', 'rbt9810*', {
-  host: 'localhost',
-  dialect: "mysql",
+const HOST = process.env.HOST
+const DATABASE = process.env.DATABASE
+const USERNAME = process.env.USERNAME
+const PASSWORD = process.env.PASSWORD
+const DIALECT = process.env.DIALECT
+
+export const sequelize = new Sequelize(DATABASE, USERNAME, PASSWORD, {
+  host: HOST,
+  dialect: String(DIALECT),
   timezone: '-03:00',
   dialectOptions: {
     useUTC: false

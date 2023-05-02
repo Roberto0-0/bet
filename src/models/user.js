@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize"
-import { sequelize } from "../database/index"
+import { sequelize } from "../database/index.js"
 
 export const User = sequelize.define("users", {
   id: {
@@ -14,7 +14,7 @@ export const User = sequelize.define("users", {
     allowNull: false
   },
   
-  serialize: {
+  serialized: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
