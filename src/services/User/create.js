@@ -11,8 +11,7 @@ export class UserCreate {
       
       const newUser = await UserRepository.create({ name, serialized })
       return {
-        success_message: "User created successfully.",
-        data: newUser
+        success_message: `${newUser.name}, your account has been created.`,
       }
       
     } catch(error) {

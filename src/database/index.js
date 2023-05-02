@@ -7,7 +7,7 @@ const USERNAME = process.env.USERNAME
 const PASSWORD = process.env.PASSWORD
 const DIALECT = process.env.DIALECT
 
-export const sequelize = new Sequelize(DATABASE, USERNAME, PASSWORD, {
+export const sequelize = new Sequelize(DATABASE, 'root', PASSWORD, {
   host: HOST,
   dialect: String(DIALECT),
   timezone: '-03:00',
