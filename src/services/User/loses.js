@@ -1,17 +1,15 @@
 import { UserRepository } from "../../repositories/userRepository.js"
 
-export class UserWon {
-  async execute({ serialized, money, bets, luckCoin }) {
+export class UserLoses {
+  async execute({ serialized, money }) {
     try {
       const user = await UserRepository.findOne({ where: { serialized: serialized } })
       
       if(!user) { return new Error("User not found.") }
       
-      var luck = money * luckCoin
-      var newMoney = money += user.money
-      var newWon = user.bets += 1
+      var newMoney = user.money - money
       
-      await user.update({ money: newMoney, bets: newWon })
+      await user.update({ money: newMoney })
       
     } catch(error) {
       console.log(error)

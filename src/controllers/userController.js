@@ -1,6 +1,7 @@
 import { UserCreate } from "../services/User/create.js"
 import { UserRead } from "../services/User/read.js"
-import { UserUpdate } from "../services/User/update.js"
+import { UserWon } from "../services/User/update.js"
+import { UserLoses } from "../services/User/loses.js"
 import { UserTransferMoney } from "../services/User/transfer.js"
 
 export class UserController {
@@ -41,19 +42,40 @@ export class UserController {
     }
   }
   
-  async update(req, res) {
+  async won(req, res) {
     const { serialized } = req.params
-    const { money, bets } = req.body
+    const { money, luckCoin } = req.body
     
     try {
-      const userUpdateService = new UserUpdate()
-      const userUpdateResult = await userUpdateService.execute({
+      const userWonService = new UserWon()
+      const userWonResult = await userWonService.execute({
         serialized,
         money: Math.abs(money),
-        bets: Math.abs(bets)
+        luckCoin: Math.abs(luckCoin)
       })
       
-      if(userUpdateResult instanceof Error) { return res.status(400).send({ message: userUpdateResult.message }) }
+      if(userWonResult instanceof Error) { return res.status(400).send({ message: userWonResult.message }) }
+      
+      return res.status(200)
+      
+    } catch(error) {
+      console.error(error)
+      return res.status(500).send({ message: "Internal server error." })
+    }
+  }
+  
+  async loses(req, res) {
+    const { serialized } = req.params
+    const { money } = req.body
+    
+    try {
+      const userLosesService = new UserLoses()
+      const userLosesResult = await userLosesService.execute({
+        serialized,
+        money: Math.abs(money)
+      })
+      
+      if(userLosesResult instanceof Error) { return res.status(400).send({ message: userLosesResult.message }) }
       
       return res.status(200)
       
