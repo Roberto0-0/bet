@@ -1,6 +1,7 @@
 import { UserCreate } from "../services/User/create.js"
 import { UserRead } from "../services/User/read.js"
 import { UserUpdate } from "../services/User/update.js"
+import { UserTransferMoney } from "../services/User/transfer.js"
 
 export class UserController {
   async create(req, res) {
@@ -55,6 +56,28 @@ export class UserController {
       if(userUpdateResult instanceof Error) { return res.status(400).send({ message: userUpdateResult.message }) }
       
       return res.status(200)
+      
+    } catch(error) {
+      console.error(error)
+      return res.status(500).send({ message: "Internal server error." })
+    }
+  }
+  
+  async transfer(req, res) {
+    const { send_serialized, receive_serialized } = req.params
+    const { money } = req.body
+    
+    try {
+      const userTransferService = new UserTransferMoney()
+      const userTransferResult = await userTransferService.execute({
+        send_serialized,
+        receive_serialized,
+        money: Math.abs(money)
+      })
+      
+      if(userTransferResult instanceof Error) { return res.status(400).send({ message: userTransferResult.message }) }
+      
+      return res.status(200).send(userTransferResult)
       
     } catch(error) {
       console.error(error)

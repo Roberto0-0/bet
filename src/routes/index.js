@@ -19,5 +19,6 @@ export class Routes {
       this.router.post("/create", new UserController().create)
       this.router.get("/read", new UserController().read)
       this.router.post("/update/:serialized", new UserController().update)
+      this.router.post("/transfer/:send_serialized/:receive_serialized", new UserController().transfer)
     }
 }
