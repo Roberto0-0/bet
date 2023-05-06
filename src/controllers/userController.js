@@ -1,6 +1,7 @@
 import { UserCreate } from "../services/User/create.js"
 import { UserRead } from "../services/User/read.js"
 import { UserUpdate } from "../services/User/update.js"
+import { UserDelete } from "../services/User/delete.js"
 import { UserWon } from "../services/User/won.js"
 import { UserLoses } from "../services/User/loses.js"
 import { UserTransferMoney } from "../services/User/transfer.js"
@@ -60,6 +61,22 @@ export class UserController {
       return res.status(200)
       
     } catch(error) {
+      console.error(error)
+      return res.status(500).send({ message: "Internal server error." })
+    }
+  }
+  
+  async delete(req, res) {
+    const { serialized } = req.params
+    
+    try {
+      const userDeleteService = new UserDelete()
+      const userDeleteResult = await userDeleteService.execute(serialized)
+      
+      if(userDeleteResult instanceof Error) { return res.status(400).send({ message: userDeleteResult.message }) }
+      
+      return res.status(200).send(userDeleteResult)
+    } catch(error)  {
       console.error(error)
       return res.status(500).send({ message: "Internal server error." })
     }
