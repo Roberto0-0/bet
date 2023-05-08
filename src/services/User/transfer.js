@@ -1,7 +1,7 @@
 import { UserRepository } from "../../repositories/userRepository.js"
 
-export class UserTransferMoney {
-  async execute({ send_serialized, receive_serialized, money }) {
+export class UserTransferCoin {
+    async execute({ send_serialized, receive_serialized, coin }) {
     try {
       const userSend = await UserRepository.findOne({ where: { serialized: send_serialized } })
       const userReceive = await UserRepository.findOne({ where: { serialized: receive_serialized } })
@@ -9,15 +9,19 @@ export class UserTransferMoney {
       if(!userSend) { return new Error("User send not found.") }
       if(!userReceive) { return new Error("User receive not found.") }
       
-      if(money > userSend.money) { return new Error("Invalid coin.") }
+      if(coin > userSend.coin) { return new Error("Invalid coin.") }
       
-      var newSendMoney = userSend.money - money
-      var newReceiveMoney = userReceive.money += money
+      var newSendCoin = userSend.coin - coin
+      var newReceiveCoin = userReceive.coin += coin
       
-      await userSend.update({ money: newSendMoney })
-      await userReceive.update({ money: newReceiveMoney })
+      await userSend.update({ coin: newSendCoin })
+      await userReceive.update({ coin: newReceiveCoin })
       
-      return { success_message: `${userSend.name} -> ${userReceive.name} $${money}` }
+      return { 
+        send: userSend.name,
+        receive: userReceive.name,
+        value: coin
+      }
       
     } catch(error) {
       console.log(error)

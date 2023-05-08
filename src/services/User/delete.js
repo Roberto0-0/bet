@@ -8,9 +8,7 @@ export class UserDelete {
       if(!user) { return new Error("User not exist.") }
       
       const deleteUser = await user.destroy(user.id)
-      return {
-        success_message: `${deleteUser.name}, was deleted.`,
-      }
+      return deleteUser.name
       
     } catch(error) {
       console.log(error)

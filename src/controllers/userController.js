@@ -4,7 +4,8 @@ import { UserUpdate } from "../services/User/update.js"
 import { UserDelete } from "../services/User/delete.js"
 import { UserWon } from "../services/User/won.js"
 import { UserLoses } from "../services/User/loses.js"
-import { UserTransferMoney } from "../services/User/transfer.js"
+import { UserTransferCoin } from "../services/User/transfer.js"
+import { UserBuy } from "../services/User/buy.js"
 
 export class UserController {
   async create(req, res) {
@@ -46,19 +47,19 @@ export class UserController {
 
   async update(req, res) {
     const { serialized } = req.params
-    const { money, bets } = req.body
+    const { coin, won } = req.body
     
     try {
       const userUpdateService = new UserUpdate()
       const userUpdateResult = await userUpdateService.execute({
         serialized,
-        money: Math.abs(money),
-        bets: Math.abs(bets)
+        coin: Math.abs(coin),
+        won: Math.abs(won)
       })
       
       if(userUpdateResult instanceof Error) { return res.status(400).send({ message: userUpdateResult.message }) }
       
-      return res.status(200)
+      return res.status(200).send(userUpdateResult)
       
     } catch(error) {
       console.error(error)
@@ -84,19 +85,19 @@ export class UserController {
   
   async won(req, res) {
     const { serialized } = req.params
-    const { money, luckCoin } = req.body
+    const { coin, luckCoin } = req.body
     
     try {
       const userWonService = new UserWon()
       const userWonResult = await userWonService.execute({
         serialized,
-        money: Math.abs(money),
+        coin: Math.abs(coin),
         luckCoin: Math.abs(luckCoin)
       })
       
       if(userWonResult instanceof Error) { return res.status(400).send({ message: userWonResult.message }) }
       
-      return res.status(200)
+      return res.status(200).send(userWonResult)
       
     } catch(error) {
       console.error(error)
@@ -106,18 +107,18 @@ export class UserController {
   
   async loses(req, res) {
     const { serialized } = req.params
-    const { money } = req.body
+    const { coin } = req.body
     
     try {
       const userLosesService = new UserLoses()
       const userLosesResult = await userLosesService.execute({
         serialized,
-        money: Math.abs(money)
+        coin: Math.abs(coin)
       })
       
       if(userLosesResult instanceof Error) { return res.status(400).send({ message: userLosesResult.message }) }
       
-      return res.status(200)
+      return res.status(200).send(userLosesResult)
       
     } catch(error) {
       console.error(error)
@@ -127,14 +128,14 @@ export class UserController {
   
   async transfer(req, res) {
     const { send_serialized, receive_serialized } = req.params
-    const { money } = req.body
+    const { coin } = req.body
     
     try {
-      const userTransferService = new UserTransferMoney()
+      const userTransferService = new UserTransferCoin()
       const userTransferResult = await userTransferService.execute({
         send_serialized,
         receive_serialized,
-        money: Math.abs(money)
+        coin: Math.abs(coin)
       })
       
       if(userTransferResult instanceof Error) { return res.status(400).send({ message: userTransferResult.message }) }
@@ -146,4 +147,21 @@ export class UserController {
       return res.status(500).send({ message: "Internal server error." })
     }
   }
+
+  async buy(req, res) {
+    const { serialized } = req.params
+    const { coin } = req.body
+
+    try {
+        const userBuyService = new UserBuy()
+        const userBuyResult = await userBuyService.execute({ serialized, coin })
+
+        if(userBuyResult instanceof Error) { return res.status(400).send({ message: userBuyResult.message }) }
+
+        return res.status(200).send(userBuyResult)
+    } catch (error) {
+        console.error(error)
+        return res.status(500).send({ message: "Internal server error." })
+    }
+  } 
 }

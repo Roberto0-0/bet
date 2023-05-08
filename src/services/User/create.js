@@ -9,10 +9,8 @@ export class UserCreate {
       
       if(user) { return new Error("User already exist.") }
       
-      const newUser = await UserRepository.create({ name, serialized })
-      return {
-        success_message: `${newUser.name}, your account has been created.`,
-      }
+      await UserRepository.create({ name, serialized })
+      return { success_message: "successfully created" }
       
     } catch(error) {
       console.log(error)

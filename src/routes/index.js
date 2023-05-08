@@ -23,5 +23,6 @@ export class Routes {
       this.router.post("/won/:serialized", new UserController().won)
       this.router.post("/loses/:serialized", new UserController().loses)
       this.router.post("/transfer/:send_serialized/:receive_serialized", new UserController().transfer)
+      this.router.post("/buy/:serialized", new UserController().buy)
     }
 }

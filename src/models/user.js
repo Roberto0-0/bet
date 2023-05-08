@@ -20,13 +20,19 @@ export const User = sequelize.define("users", {
     unique: true
   },
   
-  money: {
+  coin: {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 100
   },
+
+  diamond: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
   
-  bets: {
+  won: {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0
