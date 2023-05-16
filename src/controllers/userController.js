@@ -29,7 +29,7 @@ export class UserController {
   }
   
   async read(req, res) {
-    const { serialized } = req.query
+    const { serialized } = req.params
     
     try {
       const userReadService = new UserRead()
@@ -47,14 +47,16 @@ export class UserController {
 
   async update(req, res) {
     const { serialized } = req.params
-    const { coin, won } = req.body
+    const { coin, diamond, won, limit } = req.body
     
     try {
       const userUpdateService = new UserUpdate()
       const userUpdateResult = await userUpdateService.execute({
         serialized,
         coin: Math.abs(coin),
-        won: Math.abs(won)
+        diamond: Math.abs(diamond),
+        won: Math.abs(won),
+        limit
       })
       
       if(userUpdateResult instanceof Error) { return res.status(400).send({ message: userUpdateResult.message }) }
@@ -85,14 +87,13 @@ export class UserController {
   
   async won(req, res) {
     const { serialized } = req.params
-    const { coin, luckCoin } = req.body
+    const { coin } = req.body
     
     try {
       const userWonService = new UserWon()
       const userWonResult = await userWonService.execute({
         serialized,
-        coin: Math.abs(coin),
-        luckCoin: Math.abs(luckCoin)
+        coin: Math.abs(coin)
       })
       
       if(userWonResult instanceof Error) { return res.status(400).send({ message: userWonResult.message }) }

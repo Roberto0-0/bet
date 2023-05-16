@@ -6,10 +6,10 @@ export class UserBuy {
       const user = await UserRepository.findOne({ where: { serialized: serialized } })
       
       if(!user) { return new Error("User not found.") }
-      if(coin > user.coin) { return new Error("You do not have enough money") }
-      if(user.coin < coin) { return new Error("Invalid coin") }
+      if(coin > Math.abs(user.coin)) { return new Error("You do not have enough money") }
+      if(Math.abs(user.coin) < coin) { return new Error("Invalid coin") }
       
-      var newCoin = user.coin - coin
+      var newCoin = Math.abs(user.coin) - coin
       var newDiamond = user.diamond += 1
       
       await user.update({ coin: newCoin, diamond: newDiamond })

@@ -21,7 +21,7 @@ export const User = sequelize.define("users", {
   },
   
   coin: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DECIMAL(12, 0),
     allowNull: false,
     defaultValue: 100
   },
@@ -33,6 +33,12 @@ export const User = sequelize.define("users", {
   },
   
   won: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
+
+  limit: {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0

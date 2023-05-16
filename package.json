@@ -14,6 +14,7 @@
     "sequelize": "^6.31.1"
   },
   "devDependencies": {
+    "dayjs": "^1.11.7",
     "mysql2": "^3.2.4",
     "nodemon": "^2.0.22"
   }
