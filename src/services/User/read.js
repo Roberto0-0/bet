@@ -11,13 +11,13 @@ export class UserRead {
         ]
       })
 
-      if(!user) { return new Error("User not found.") }
+      if(!user) { return new Error("Use the !create command.") }
 
       var currentDate = Number(dayjs(new Date()).format("DD"))
       var updateDate = Number(dayjs(user.updatedAt).format("DD"))
 
       if(user.limit == 3) {
-        if(currentDate >= updateDate) {
+        if(currentDate > updateDate) {
             var newCoint = Math.abs(user.coin) + 100
             await user.update({ coin: newCoint, limit: 0 })
         }
@@ -38,7 +38,7 @@ export class UserRead {
       return result
 
     } catch(error) {
-      console.log(error)
+      console.error(error)
       return new Error("Internal server error.") 
     }
   }

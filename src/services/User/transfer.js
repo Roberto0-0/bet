@@ -25,7 +25,7 @@ export class UserTransferCoin {
             }
         
         } catch(error) {
-            console.log(error)
+            console.error(error)
             return new Error("Internal server error.") 
         }
     }

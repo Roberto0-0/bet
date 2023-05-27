@@ -10,13 +10,11 @@ export class UserWon {
       var newCoin = coin += Math.abs(user.coin)
       var newWon = user.won += 1
 
-      console.log(newCoin)
-
       await user.update({ coin: newCoin, won: newWon })
       return
       
     } catch(error) {
-      console.log(error)
+      console.error(error)
       return new Error("Internal server error.") 
     }
   }
