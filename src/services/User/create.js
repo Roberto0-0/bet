@@ -11,7 +11,6 @@ export class UserCreate {
       
       await UserRepository.create({ name, serialized })
       return { success_message: "successfully created" }
-      
     } catch(error) {
       console.log(error)
       return new Error("Internal server error.") 

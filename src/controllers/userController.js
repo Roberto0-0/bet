@@ -5,7 +5,9 @@ import { UserDelete } from "../services/User/delete.js"
 import { UserWon } from "../services/User/won.js"
 import { UserLoses } from "../services/User/loses.js"
 import { UserTransferCoin } from "../services/User/transfer.js"
-import { UserBuy } from "../services/User/buy.js"
+import { UserProfile } from "../services/User/profile.js"
+import { Ranking } from "../services/User/ranking.js"
+import { Diamond } from "../services/User/diamond.js"
 
 export class UserController {
   async create(req, res) {
@@ -21,7 +23,6 @@ export class UserController {
       if(userCreateResult instanceof Error) { return res.status(400).send({ message: userCreateResult.message }) }
       
       return res.status(201).send({ message: userCreateResult })
-      
     } catch(error) {
       console.error(error)
       return res.status(500).send({ message: "Internal server error." })
@@ -38,7 +39,6 @@ export class UserController {
       if(userReadResult instanceof Error) { return res.status(400).send({ message: userReadResult.message }) }
       
       return res.status(200).send(userReadResult)
-      
     } catch(error) {
       console.error(error)
       return res.status(500).send({ message: "Internal server error." })
@@ -62,7 +62,6 @@ export class UserController {
       if(userUpdateResult instanceof Error) { return res.status(400).send({ message: userUpdateResult.message }) }
       
       return res.status(200).send(userUpdateResult)
-      
     } catch(error) {
       console.error(error)
       return res.status(500).send({ message: "Internal server error." })
@@ -99,7 +98,6 @@ export class UserController {
       if(userWonResult instanceof Error) { return res.status(400).send({ message: userWonResult.message }) }
       
       return res.status(200).send(userWonResult)
-      
     } catch(error) {
       console.error(error)
       return res.status(500).send({ message: "Internal server error." })
@@ -120,7 +118,6 @@ export class UserController {
       if(userLosesResult instanceof Error) { return res.status(400).send({ message: userLosesResult.message }) }
       
       return res.status(200).send(userLosesResult)
-      
     } catch(error) {
       console.error(error)
       return res.status(500).send({ message: "Internal server error." })
@@ -142,7 +139,6 @@ export class UserController {
       if(userTransferResult instanceof Error) { return res.status(400).send({ message: userTransferResult.message }) }
       
       return res.status(200).send(userTransferResult)
-      
     } catch(error) {
       console.error(error)
       return res.status(500).send({ message: "Internal server error." })
@@ -151,11 +147,15 @@ export class UserController {
 
   async buy(req, res) {
     const { serialized } = req.params
-    const { coin } = req.body
+    const { coin, quantityDiamond } = req.body
 
     try {
-        const userBuyService = new UserBuy()
-        const userBuyResult = await userBuyService.execute({ serialized, coin })
+        const userBuyService = new Diamond()
+        const userBuyResult = await userBuyService.buy({ 
+          serialized, 
+          coin,
+          quantityDiamond: Math.abs(quantityDiamond)
+         })
 
         if(userBuyResult instanceof Error) { return res.status(400).send({ message: userBuyResult.message }) }
 
@@ -164,5 +164,115 @@ export class UserController {
         console.error(error)
         return res.status(500).send({ message: "Internal server error." })
     }
-  } 
-}
+  }
+
+  async sellMarket(req, res) {
+    const { serialized } = req.params
+    const { quantityDiamond } = req.body
+
+    try {
+        const service = new Diamond()
+        const result = await service.buyMarket({ 
+          serialized, 
+          quantityDiamond: Math.abs(quantityDiamond)
+         })
+
+        if(result instanceof Error) { return res.status(400).send({ message: result.message }) }
+
+        return res.status(200).send(result)
+    } catch (error) {
+        console.error(error)
+        return res.status(500).send({ message: "Internal server error." })
+    }
+  }
+
+  async sell(req, res) {
+    const { selleSerialized, buyerSerialized } = req.params
+    const { quantityDiamond } = req.body
+
+    console.log(selleSerialized, buyerSerialized)
+
+    try {
+      const service = new Diamond()
+      const result = await service.sale({
+        selleSerialized,
+        buyerSerialized,
+        quantityDiamond: Math.abs(quantityDiamond)
+      })
+
+      if(result instanceof Error) { return res.status(400).json({
+        success: false,
+        message: result.message
+      }) }
+
+      return res.status(200).json(result)
+    } catch (error) {
+      console.error(error)
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error." 
+      })
+    }
+  }
+
+  async buyer(req, res) {
+    const { selleSerialized, buyerSerialized } = req.params
+    const { diamondPrice, quantityDiamond } = req.body
+
+    try {
+      const service = new Diamond()
+      const result = await service.buyer({
+        selleSerialized,
+        buyerSerialized,
+        diamondPrice: Math.abs(diamondPrice),
+        quantityDiamond: Math.abs(quantityDiamond)
+      })
+
+      if(result instanceof Error) { return res.status(400).json({
+        success: false,
+        message: result.message
+      }) }
+
+      return res.status(200).json(result)
+    } catch (error) {
+      console.error(error)
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error." 
+      })
+    }
+  }
+
+  async profile(req, res) {
+    const { commandSerialized, profileSerialized } = req.params
+
+    try {
+      const service = new UserProfile()
+      const result = await service.execute({
+        commandSerialized,
+        profileSerialized
+      })
+
+      if(result instanceof Error) { return res.status(400).send(result.message) }
+
+      return res.status(200).send(result)
+    } catch (error) {
+      console.error(error)
+      return res.status(500).send({ message: "Internal server error." })
+    }
+  }
+
+  async ranking(req, res) {
+    try {
+      const service = new Ranking()
+      const result = await service.execute()
+  
+      if(result instanceof Error) { return res.status(400).send(result.message) }
+  
+      return res.status(200).send(result)
+    } catch (error) {
+      console.error(error)
+      return res.status(200).send({ message: "Internal server error." })
+    }
+  }
+ }

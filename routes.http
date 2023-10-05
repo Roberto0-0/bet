@@ -1,0 +1,55 @@
+GET http://localhost:3333/read/558293918279@c.us
+
+###
+
+GET http://localhost:3333/ranking
+
+###
+
+POST http://localhost:3333/bank
+
+###
+
+GET http://localhost:3333/bank/1
+
+###
+
+PUT  http://localhost:3333/bank/1
+Content-Type: application/json
+
+{
+    "coin": 100000000
+}
+
+###
+
+PUT  http://localhost:3333/bank/check/1
+Content-Type: application/json
+
+{
+    "allBetCoin": 900000000
+}
+
+###
+
+PUT  http://localhost:3333/update/558293918279@c.us
+Content-Type: application/json
+
+{
+    "coin": 99999999,
+    "diamond": 900,
+    "won": 478,
+    "limit": 0
+}
+
+###
+GET http://localhost:3333/read/557391642893@c.us
+
+###
+
+PUT http://localhost:3333/loses/558293918279@c.us
+Content-Type: application/json
+
+{
+    "coin": 1
+}

@@ -4,14 +4,16 @@ import dayjs from "dayjs"
 export class UserRead {
   async execute(serialized) {
     try {
-      const user = await UserRepository.findOne({ where: { serialized: serialized } })
-      const allUsers = await UserRepository.findAll({
-        order:[
-            ["diamond", "DESC"]
-        ]
-      })
+      const [ user, allUsers ] = await Promise.all([
+        UserRepository.findOne({ where: { serialized: serialized } }),
+        await UserRepository.findAll({
+            order:[
+                ["diamond", "DESC"]
+            ]
+          })
+      ])
 
-      if(!user) { return new Error("Use the !create command.") }
+      if(!user) { return new Error("Use the */create* command.") }
 
       var currentDate = Number(dayjs(new Date()).format("DD"))
       var updateDate = Number(dayjs(user.updatedAt).format("DD"))
