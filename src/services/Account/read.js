@@ -13,7 +13,7 @@ export class UserRead {
           })
       ])
 
-      if(!user) { return new Error("Use the */create* command.") }
+      if(!user) { return new Error("Use o comando !bet criar.") }
 
       var currentDate = Number(dayjs(new Date()).format("DD"))
       var updateDate = Number(dayjs(user.updatedAt).format("DD"))

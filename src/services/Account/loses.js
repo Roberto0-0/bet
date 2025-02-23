@@ -12,10 +12,10 @@ export class UserLoses {
         BankRepository.findOne({ where: { id: 1 } })
       ])
       
-      if(!user) { return new Error("User not found.") }
-      if(!bank) { return new Error("Bank not found.") }
+      if(!user) { return new Error("Conta não encontrada.") }
+      if(!bank) { return new Error("Banco não encontrado.") }
 
-      if(coin > Math.abs(user.coin)) { return new Error("You do not have enough money.") }
+      if(coin > Math.abs(user.coin)) { return new Error("Você não tem dinheiro suficiente.") }
       
       var newBankCoin = Math.abs(bank.coin) + coin
       var newCoin = Math.abs(user.coin) - coin

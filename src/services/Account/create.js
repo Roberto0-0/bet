@@ -7,7 +7,7 @@ export class UserCreate {
         where: { serialized: serialized }
       })
       
-      if(user) { return new Error("User already exist.") }
+      if(user) { return new Error("Você já tem uma conta.") }
       
       await UserRepository.create({ name, serialized })
       return { success_message: "successfully created" }

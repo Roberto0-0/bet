@@ -1,14 +1,14 @@
 import { UserRepository } from "../../repositories/userRepository.js"
 
-export class UserUpdate {
-  async execute({ serialized, coin, diamond, won, limit }) {
+export class UserDelete {
+  async execute(serialized) {
     try {
       const user = await UserRepository.findOne({ where: { serialized: serialized } })
       
-      if(!user) { return new Error("User not found.") }
+      if(!user) { return new Error("Conta não encontrada.") }
       
-      await user.update({ coin, diamond, won, limit })
-      return
+      const deleteUser = await user.destroy(user.id)
+      return user.name
       
     } catch(error) {
       console.log(error)

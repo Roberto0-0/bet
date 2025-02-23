@@ -7,12 +7,12 @@ export class Diamond {
         try {
           const user = await UserRepository.findOne({ where: { serialized: serialized } })
           
-          if(!user) { return new Error("User not found.") }
+          if(!user) { return new Error("Usuario não encontrado.") }
 
           var fullPrice = coin * quantityDiamond
 
-          if(fullPrice > Math.abs(user.coin)) { return new Error("You don't have enough money") }
-          if(Math.abs(user.coin) < fullPrice) { return new Error("Invalid coin") }
+          if(fullPrice > Math.abs(user.coin)) { return new Error("Você não tem dinheiro suficiente.") }
+          if(Math.abs(user.coin) < fullPrice) { return new Error("Moeda inválida.") }
           
           var newCoin = Math.abs(user.coin) - (fullPrice)
           if(newCoin <= 0) { newCoin = 0 }
@@ -35,10 +35,10 @@ export class Diamond {
             UserRepository.findOne({ where: { serialized: buyerSerialized } })
         ])
 
-        if(!selleUser) { return new Error("Selle player not found.") }
-        if(!buyerUser) { return new Error("Buyer player not found.") }
+        if(!selleUser) { return new Error("Vendedor não encontrado") }
+        if(!buyerUser) { return new Error("Comprador não encontrado.") }
 
-        if(quantityDiamond > selleUser.diamond) { return new Error("You don't have enough diamonds.") }
+        if(quantityDiamond > selleUser.diamond) { return new Error("Você não tem diamantes suficientes.") }
 
         return {
             success: true
@@ -51,16 +51,16 @@ export class Diamond {
             UserRepository.findOne({ where: { serialized: buyerSerialized } })
         ])
 
-        if(!selleUser) { return new Error("Selle player not found.") }
-        if(!buyerUser) { return new Error("Buyer player not found.") }
+        if(!selleUser) { return new Error("Vendedor não encontrado") }
+        if(!buyerUser) { return new Error("Comprador não encontrado.") }
 
-        if(diamondPrice > 1000000) { return new Error("Sales below 1 million.") }
+        if(diamondPrice > 1000000) { return new Error("Vendas abaixo de 1 milhão.") }
 
         var convertSalerCoin = (quantityDiamond * diamondPrice)
         var sellerDiamond = selleUser.diamond
 
-        if(Math.abs(buyerUser.coin) < convertSalerCoin) { return new Error("You don't have enough coins.") }
-        if(sellerDiamond < quantityDiamond) { return new Error(`"${selleUser.name}" don't have enough diamonds.`) }
+        if(Math.abs(buyerUser.coin) < convertSalerCoin) { return new Error("Você não tem moedas suficientes") }
+        if(sellerDiamond < quantityDiamond) { return new Error(`"${selleUser.name}" não tem diamantes suficientes.`) }
 
         var newBuyerCoin = Math.abs(buyerUser.coin) - convertSalerCoin
         var newBuyerDiamond = buyerUser.diamond += quantityDiamond
@@ -84,10 +84,10 @@ export class Diamond {
             BankRepository.findOne({ where: { id: 1 } })
         ])
 
-        if(!user) { return new Error("User player not found.") }
-        if(!bank) { return new Error("Bank not found.") }
+        if(!user) { return new Error("Conta não encontrada.") }
+        if(!bank) { return new Error("Banco não encontrado.") }
 
-        if(quantityDiamond > user.diamond) { return new Error("You don't have enough diamonds.") }
+        if(quantityDiamond > user.diamond) { return new Error("Você não tem diamantes suficientes.") }
 
         var convertDimondPrice = quantityDiamond * bank.diamondCoin
         var newCoin = Math.abs(user.coin) + convertDimondPrice

@@ -13,7 +13,7 @@ export class Ranking {
             limit: 3
         })
 
-        if(!users) { return new Error("Users not found.") }
+        if(!users) { return new Error("Conta não encontrada.") }
         users.map((user, index) => {
             topThreeUsers.push(`*${index+1}°* *${user.name}* _*${user.diamond}*_`)
         })

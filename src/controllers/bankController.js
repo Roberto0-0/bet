@@ -9,7 +9,12 @@ export class BankController {
             const service = new BankCreate()
             const result = await service.execute()
     
-            return res.status(204).send()   
+            if(result instanceof Error) return res.status(400).json({
+                statusCode: 400,
+                message: result.message
+            })
+
+            return result  
         } catch (error) {
            console.log(error)
            return res.status(500).send({ message: "Internal server error." })

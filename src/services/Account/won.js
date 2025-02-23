@@ -14,8 +14,8 @@ export class UserWon {
         BankRepository.findOne({ where: { id: 1 } })
       ])
       
-      if(!user) { return new Error("User not found.") }
-      if(!bank) { return new Error("Bank not found.") }
+      if(!user) { return new Error("Conta não encontrada.") }
+      if(!bank) { return new Error("Banco não encontrado.") }
 
       var newBankCoin = Math.abs(bank.coin) - coin
       var newCoin = coin += Math.abs(user.coin)

@@ -1,15 +1,15 @@
-import { UserCreate } from "../services/User/create.js"
-import { UserRead } from "../services/User/read.js"
-import { UserUpdate } from "../services/User/update.js"
-import { UserDelete } from "../services/User/delete.js"
-import { UserWon } from "../services/User/won.js"
-import { UserLoses } from "../services/User/loses.js"
-import { UserTransferCoin } from "../services/User/transfer.js"
-import { UserProfile } from "../services/User/profile.js"
-import { Ranking } from "../services/User/ranking.js"
-import { Diamond } from "../services/User/diamond.js"
+import { UserCreate } from "../services/Account/create.js"
+import { UserRead } from "../services/Account/read.js"
+import { UserUpdate } from "../services/Account/update.js"
+import { UserDelete } from "../services/Account/delete.js"
+import { UserWon } from "../services/Account/won.js"
+import { UserLoses } from "../services/Account/loses.js"
+import { UserTransferCoin } from "../services/Account/transfer.js"
+import { UserProfile } from "../services/Account/profile.js"
+import { Ranking } from "../services/Account/ranking.js"
+import { Diamond } from "../services/Account/diamond.js"
 
-export class UserController {
+export class AccountController {
   async create(req, res) {
     const { name, serialized } = req.body
     

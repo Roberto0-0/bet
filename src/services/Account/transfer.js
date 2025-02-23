@@ -9,11 +9,11 @@ export class UserTransferCoin {
                 UserRepository.findOne({ where: { serialized: receive_serialized } })
             ])
 
-            if(!userSend) { return new Error("User send not found.") }
-            if(!userReceive) { return new Error("User receive not found.") }
+            if(!userSend) { return new Error("O remetente não foi encontrado.") }
+            if(!userReceive) { return new Error("O destinatário não foi encontrado.") }
             
-            if(Math.abs(userSend.coin) === 100) { return new Error("You cannot send the initial value.") }
-            if(coin > Math.abs(userSend.coin)) { return new Error("Invalid coin.") }
+            if(Math.abs(userSend.coin) === 100) { return new Error("Você não pode enviar o valor inicial.") }
+            if(coin > Math.abs(userSend.coin)) { return new Error("Moeda inválida.") }
 
             var newSendCoin = Math.abs(userSend.coin) - coin
             var newReceiveCoin = Math.abs(userReceive.coin) + coin

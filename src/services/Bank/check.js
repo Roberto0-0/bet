@@ -2,6 +2,7 @@ import { BankRepository } from "../../repositories/bankRespository.js"
 
 export class BankCheck {
     async execute({ id, allBetCoin }) {
+        console.log(allBetCoin)
         const bank = await BankRepository.findOne({ where: { id: id } })
 
         if(!bank) { return new Error("Bank not found.") }

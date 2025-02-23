@@ -11,9 +11,7 @@ export const sequelize = new Sequelize(DATABASE, 'root', PASSWORD, {
   host: HOST,
   dialect: String(DIALECT),
   timezone: '-03:00',
-  dialectOptions: {
-    useUTC: false
-  }
+  logging: false
 })
 
 try {

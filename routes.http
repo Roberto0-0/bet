@@ -32,18 +32,18 @@ Content-Type: application/json
 
 ###
 
-PUT  http://localhost:3333/update/558293918279@c.us
+PUT  http://localhost:3333/account/update/558293918279@c.us
 Content-Type: application/json
 
 {
-    "coin": 99999999,
-    "diamond": 900,
-    "won": 478,
+    "coin": 5000000,
+    "diamond": 0,
+    "won": 0,
     "limit": 0
 }
 
 ###
-GET http://localhost:3333/read/557391642893@c.us
+GET http://localhost:3333/account/read/558293918279@c.us
 
 ###
 
