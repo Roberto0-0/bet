@@ -4,10 +4,7 @@ class PlayerWon {
         playerWonProps.hitAmount++
         playerWonProps.moves++
 
-        return {
-            success: true,
-            data: playerWonProps
-        }
+        return playerWonProps
     }
 }
 

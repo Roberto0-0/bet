@@ -3,10 +3,7 @@ class PlayerLost {
         playerLostProps.coins -= playerLostProps.prejudice
         playerLostProps.moves++
 
-        return {
-            success: true,
-            data: playerLostProps
-        }
+        return playerLostProps 
     }
 }
 
