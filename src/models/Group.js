@@ -4,7 +4,7 @@ class Group {
         this.name = name
         this.players = []
         this.store = []
-        this.coins = 99999999 
+        this.coins = 999999999 
         this.status = false
         this.createdAt = new Date().getTime()
     }
